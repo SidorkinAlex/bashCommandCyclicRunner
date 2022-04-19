@@ -1,0 +1,14 @@
+[
+  {
+    "interval": 10,
+    "command": "php 1.php"
+  },
+  {
+    "interval": 1,
+    "command": "ls -l /var/log"
+  },
+  {
+    "interval": 30,
+    "command": "ls -l"
+  }
+]
