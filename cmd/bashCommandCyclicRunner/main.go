@@ -26,11 +26,11 @@ func stoppingApp() {
 	fileutils.WriteFile("",".stop.log")
 	for {
 		isStoped := fileutils.ReadFile(".stop.log")
+		fmt.Printf("%s",".")
 		if isStoped == "stoped" {
-			fmt.Println("app is stoped")
+			fmt.Println("")
 			log.Fatalf("app is stoped")
 		}
-		fmt.Printf("%s",".")
 		time.Sleep(1 * time.Second)
 	}
 }
@@ -47,12 +47,13 @@ func checkStopApp() bool {
 
 func runCommand(command runner.JsonEncoder)  {
 	for  {
-		out, err := exec.Command("/bin/sh","-c",command.Command).Output()
-		if err != nil {
-			fmt.Println(err)
-		}
+		 exec.Command("/bin/sh","-c",command.Command).Output()
+		//out, err := exec.Command("/bin/sh","-c",command.Command).Output()
+		//if err != nil {
+		//	fmt.Println(err)
+		//}
 		//fileutils.WriteFile(command.Command + string(out)+ "\n","start_log.log")
-		fmt.Println(out)
+		//fmt.Println(string(out))
 		time.Sleep(time.Duration(command.Interval) * time.Second)
 	}
 }
@@ -67,10 +68,12 @@ func runCyclicCommand()  {
 	}
 }
 func runControllerPrograms(){
+	log.Println("Programm bashCommandCyclicRunner has been success running")
 	os.Remove(".stop.log")
 	for {
 		if _, err := os.Stat(".stop.log"); err == nil {
 			fileutils.WriteFile("stoped",".stop.log")
+			fmt.Println("")
 			log.Fatalln("servis-stoped")
 		}
 		time.Sleep(5 * time.Second)
