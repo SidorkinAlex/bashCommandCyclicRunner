@@ -14,7 +14,7 @@ import (
 
 func WriteFile(mes string, filename string) {
 
-	if !hasFile(filename) {
+	if !HasFile(filename) {
 
 		file, err := os.Create(filename)
 
@@ -46,7 +46,7 @@ func RewriteFile(mes string, filename string)  {
 	}
 }
 
-func hasFile(filePath string) bool {
+func HasFile(filePath string) bool {
 	if _, err := os.Stat(filePath); err == nil {
 		return true
 	}

@@ -5,6 +5,7 @@ import (
 	"bashCommandCyclicRunner/internal/app/runner"
 	"flag"
 	"fmt"
+	"github.com/sevlyar/go-daemon"
 	"log"
 	"os"
 	"os/exec"
@@ -16,22 +17,53 @@ func main() {
 	if(checkStopApp()){
 		stoppingApp()
 	} else {
-		runCyclicCommand()
-		runControllerPrograms()
+		demonise()
+		log.Println("Programm bashCommandCyclicRunner has been success running")
 	}
+}
+func demonise()  {
+	cntxt := &daemon.Context{
+		PidFileName: ".sample.pid",
+		PidFilePerm: 0644,
+		LogFileName: ".sample.log",
+		LogFilePerm: 0640,
+		WorkDir:     "./",
+		Umask:       027,
+		Args:        []string{"[go-daemon sample]"},
+	}
+
+	d, err := cntxt.Reborn()
+	if err != nil {
+		log.Fatal("Unable to run: ", err)
+	}
+	if d != nil {
+		return
+	}
+	defer cntxt.Release()
+
+	log.Print("- - - - - - - - - - - - - - -")
+	log.Print("daemon started")
+	//pid := os.Getpid()
+	//fileutils.WriteFile(string(pid),".sample.pid")
+	runCyclicCommand()
+	runControllerPrograms()
 }
 
 func stoppingApp() {
-	fmt.Printf("%s","stopping app in progress")
-	fileutils.WriteFile("",".stop.log")
-	for {
-		isStoped := fileutils.ReadFile(".stop.log")
-		fmt.Printf("%s",".")
-		if isStoped == "stoped" {
-			fmt.Println("")
-			log.Fatalf("app is stoped")
+	if !fileutils.HasFile(".sample.pid"){
+		log.Println("App not running")
+	} else {
+		fmt.Printf("%s", "stopping app in progress")
+		fileutils.WriteFile("", ".stop.log")
+		for {
+			isStoped := fileutils.ReadFile(".stop.log")
+			fmt.Printf("%s", ".")
+			if isStoped == "stoped" {
+				fmt.Println("")
+				log.Fatalf("app is stoped")
+			}
+			time.Sleep(1 * time.Second)
 		}
-		time.Sleep(1 * time.Second)
 	}
 }
 
@@ -41,7 +73,6 @@ func checkStopApp() bool {
 	flag.BoolVar(&stop, "stop", false , "set this param to stopping demon")
 	flag.Parse()
 
-	fmt.Println(stop)
 	return stop
 }
 
