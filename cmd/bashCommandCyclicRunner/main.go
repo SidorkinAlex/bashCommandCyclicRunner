@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bashCommandCyclicRunner/internal/app/commandcontroller"
 	"bashCommandCyclicRunner/internal/app/fileutils"
 	"bashCommandCyclicRunner/internal/app/runner"
-	"flag"
 	"fmt"
 	"github.com/sevlyar/go-daemon"
 	"log"
@@ -14,12 +14,29 @@ import (
 
 func main() {
 
-	if(checkStopApp()){
+	comCont :=commandcontroller.ParseCliParams()
+	if comCont.Action == "stop" {
 		stoppingApp()
-	} else {
+	} else if comCont.Action == "start" {
 		demonise()
 		log.Println("Programm bashCommandCyclicRunner has been success running")
+	} else if comCont.Action == "restart" {
+		restartApp()
+	} else if comCont.Action == "create" {
+		createJob()
+	} else {
+		log.Fatalln("Action not set Error")
 	}
+}
+
+func createJob() {
+	log.Println("createJob")
+}
+
+func restartApp() {
+	stoppingApp()
+	demonise()
+	log.Println("App is restarted success")
 }
 func demonise()  {
 	cntxt := &daemon.Context{
@@ -55,25 +72,18 @@ func stoppingApp() {
 	} else {
 		fmt.Printf("%s", "stopping app in progress")
 		fileutils.WriteFile("", ".stop.log")
+		// TODO сделать проверку на запущенный процесс с пидом указанным в файлике старта
 		for {
 			isStoped := fileutils.ReadFile(".stop.log")
 			fmt.Printf("%s", ".")
 			if isStoped == "stoped" {
 				fmt.Println("")
-				log.Fatalf("app is stoped")
+				log.Println("app is stoped")
+				break
 			}
 			time.Sleep(1 * time.Second)
 		}
 	}
-}
-
-func checkStopApp() bool {
-	var stop bool
-
-	flag.BoolVar(&stop, "stop", false , "set this param to stopping demon")
-	flag.Parse()
-
-	return stop
 }
 
 func runCommand(command runner.JsonEncoder)  {
