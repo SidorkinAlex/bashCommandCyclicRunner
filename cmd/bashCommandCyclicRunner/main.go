@@ -23,7 +23,7 @@ func main() {
 }
 func demonise()  {
 	cntxt := &daemon.Context{
-		PidFileName: ".sample.pid",
+		PidFileName: ".sample.pid.log",
 		PidFilePerm: 0644,
 		LogFileName: ".sample.log",
 		LogFilePerm: 0640,
@@ -44,13 +44,13 @@ func demonise()  {
 	log.Print("- - - - - - - - - - - - - - -")
 	log.Print("daemon started")
 	//pid := os.Getpid()
-	//fileutils.WriteFile(string(pid),".sample.pid")
+	//fileutils.WriteFile(string(pid),".sample.pid.log")
 	runCyclicCommand()
 	runControllerPrograms()
 }
 
 func stoppingApp() {
-	if !fileutils.HasFile(".sample.pid"){
+	if !fileutils.HasFile(".sample.pid.log"){
 		log.Println("App not running")
 	} else {
 		fmt.Printf("%s", "stopping app in progress")
