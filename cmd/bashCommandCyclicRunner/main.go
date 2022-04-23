@@ -3,6 +3,7 @@ package main
 import (
 	"bashCommandCyclicRunner/internal/app/commandcontroller"
 	"bashCommandCyclicRunner/internal/app/fileutils"
+	"bashCommandCyclicRunner/internal/app/jobcreator"
 	"bashCommandCyclicRunner/internal/app/runner"
 	"fmt"
 	"github.com/sevlyar/go-daemon"
@@ -30,7 +31,7 @@ func main() {
 }
 
 func createJob() {
-	log.Println("createJob")
+	jobcreator.CreateJob()
 }
 
 func restartApp() {
