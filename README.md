@@ -19,6 +19,8 @@ Or download the compiled binary from the link
 
 The Latest Release:
 
+Version 0.1
+https://github.com/SidorkinAlex/bashCommandCyclicRunner/releases/tag/0.1
 
 
 ## Usage
@@ -110,6 +112,8 @@ make
 
 Последний Релиз:
 
+Версия 0.1
+https://github.com/SidorkinAlex/bashCommandCyclicRunner/releases/tag/0.1
 
 
 ## Использование
