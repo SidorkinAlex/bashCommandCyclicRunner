@@ -4,9 +4,6 @@
 [Ru](#Циклический-запускикоманд-команд-в-терминале) |
 [En](#Cyclic-start-and-command-commands-in-the-terminal)
 
-![image](http://web-seedteam.ru/wp-content/uploads/2021/04/screenshot-0.0.0.0-2021.04.15-23_18_20.png)
-![image](http://web-seedteam.ru/wp-content/uploads/2021/04/screenshot-0.0.0.0-2021.04.15-23_43_05.png)
-
 The program is designed to run commands at a fixed time interval (specified in seconds)
 
 ## Installation
@@ -19,8 +16,8 @@ Or download the compiled binary from the link
 
 The Latest Release:
 
-Version 0.1
-https://github.com/SidorkinAlex/bashCommandCyclicRunner/releases/tag/0.1
+Version 0.1.1
+https://github.com/SidorkinAlex/bashCommandCyclicRunner/releases/tag/0.1.1
 
 
 ## Usage
@@ -112,8 +109,8 @@ make
 
 Последний Релиз:
 
-Версия 0.1
-https://github.com/SidorkinAlex/bashCommandCyclicRunner/releases/tag/0.1
+Версия 0.1.1
+https://github.com/SidorkinAlex/bashCommandCyclicRunner/releases/tag/0.1.1
 
 
 ## Использование
