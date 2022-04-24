@@ -70,18 +70,23 @@ func GetRootDir() string {
 }
 
 func ReadFile(filename string) string {
+	var fileContent string
+	if HasFile(filename) {
+		f, err := os.Open(filename)
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
 
-	f, err := os.Open(filename)
-	if err != nil {
-		panic(err)
+		// для более мелких файлов
+		fContent, err := ioutil.ReadFile(filename)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fileContent = string(fContent)
+	} else {
+		fileContent = ""
 	}
-	defer f.Close()
 
-
-	// для более мелких файлов
-	fContent, err := ioutil.ReadFile(filename)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return string(fContent)
+	return fileContent
 }
