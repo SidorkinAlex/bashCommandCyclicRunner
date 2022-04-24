@@ -61,8 +61,6 @@ func demonise()  {
 
 	log.Print("- - - - - - - - - - - - - - -")
 	log.Print("daemon started")
-	//pid := os.Getpid()
-	//fileutils.WriteFile(string(pid),".sample.pid.log")
 	runCyclicCommand()
 	runControllerPrograms()
 }
@@ -90,12 +88,6 @@ func stoppingApp() {
 func runCommand(command runner.JsonEncoder)  {
 	for  {
 		 exec.Command("/bin/sh","-c",command.Command).Output()
-		//out, err := exec.Command("/bin/sh","-c",command.Command).Output()
-		//if err != nil {
-		//	fmt.Println(err)
-		//}
-		//fileutils.WriteFile(command.Command + string(out)+ "\n","start_log.log")
-		//fmt.Println(string(out))
 		time.Sleep(time.Duration(command.Interval) * time.Second)
 	}
 }
