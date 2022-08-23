@@ -44,6 +44,7 @@ func RewriteFile(mes string, filename string)  {
 	if err := f.Close(); err != nil {
 		log.Fatal(err)
 	}
+	f.Sync()
 }
 
 func HasFile(filePath string) bool {
@@ -72,12 +73,6 @@ func GetRootDir() string {
 func ReadFile(filename string) string {
 	var fileContent string
 	if HasFile(filename) {
-		f, err := os.Open(filename)
-		if err != nil {
-			panic(err)
-		}
-		defer f.Close()
-
 		// для более мелких файлов
 		fContent, err := ioutil.ReadFile(filename)
 		if err != nil {
