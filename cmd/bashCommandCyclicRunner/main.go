@@ -15,7 +15,7 @@ import (
 
 func main() {
 
-	comCont :=commandcontroller.ParseCliParams()
+	comCont := commandcontroller.ParseCliParams()
 	if comCont.Action == "stop" {
 		stoppingApp()
 	} else if comCont.Action == "start" {
@@ -39,7 +39,7 @@ func restartApp() {
 	demonise()
 	log.Println("App is restarted success")
 }
-func demonise()  {
+func demonise() {
 	cntxt := &daemon.Context{
 		PidFileName: ".sample.pid.log",
 		PidFilePerm: 0644,
@@ -66,7 +66,7 @@ func demonise()  {
 }
 
 func stoppingApp() {
-	if !fileutils.HasFile(".sample.pid.log"){
+	if !fileutils.HasFile(".sample.pid.log") {
 		log.Println("App not running")
 	} else {
 		fmt.Printf("%s", "stopping app in progress")
@@ -85,28 +85,28 @@ func stoppingApp() {
 	}
 }
 
-func runCommand(command runner.JsonEncoder)  {
-	for  {
-		 exec.Command("/bin/sh","-c",command.Command).Output()
+func runCommand(command runner.JsonEncoder) {
+	for {
+		go exec.Command("/bin/sh", "-c", command.Command).Output()
 		time.Sleep(time.Duration(command.Interval) * time.Second)
 	}
 }
 
-func runCyclicCommand()  {
+func runCyclicCommand() {
 	var CommandCollection []runner.JsonEncoder
 	CommandCollection = runner.GetConfigJson()
-	for index, command := range CommandCollection{
-		fmt.Println("Command ",index, command.Command)
-		fmt.Println("Interval ",index, command.Interval)
+	for index, command := range CommandCollection {
+		fmt.Println("Command ", index, command.Command)
+		fmt.Println("Interval ", index, command.Interval)
 		go runCommand(command)
 	}
 }
-func runControllerPrograms(){
+func runControllerPrograms() {
 	log.Println("Programm bashCommandCyclicRunner has been success running")
 	os.Remove(".stop.log")
 	for {
 		if _, err := os.Stat(".stop.log"); err == nil {
-			fileutils.WriteFile("stoped",".stop.log")
+			fileutils.WriteFile("stoped", ".stop.log")
 			fmt.Println("")
 			log.Fatalln("servis-stoped")
 		}
